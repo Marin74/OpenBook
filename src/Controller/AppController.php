@@ -64,47 +64,15 @@ class AppController extends AbstractController
 
         $errors = array();
 
-        $title = trim($request->get("title"));
-        if(empty($title)) {
-            $title = null;
-        }
-        $subtitle = trim($request->get("subtitle"));
-        if(empty($subtitle)) {
-            $subtitle = null;
-        }
-        $summary = trim($request->get("summary"));
-        if(empty($summary)) {
-            $summary = null;
-        }
-        $publicationYear = $request->get("publicationYear");
-        // Check the value is an integer
-        if(!empty($publicationYear)) {
-            if(preg_match("/^\d+$/", $publicationYear)) {// Check it is an integer
-                $publicationYear = intval($publicationYear);
-            }
-            else {
-                $publicationYear = null;
-            }
-        }
-        $genreCode = $request->get("genre");
-        $genre = null;
-        if(!empty($genreCode)) {
-            $genre = $repoGenre->findOneByCode($genreCode);
-        }
+        $res = $dataUtils->setBookFromRequest($request, new Book(), $repoGenre);
 
-        // Create the book
-        if(empty($title)) {
-            $errors[] = $translator->trans("title_field_empty");
-        }
-        else {
-            $book = new Book();
-            $book->setTitle($title);
-            $book->setSubtitle($subtitle);
-            $book->setSummary($summary);
-            $book->setPublicationYear($publicationYear);
-            $book->setGenre($genre);
+        if($res instanceof Book) {
+            $book = $res;
             $em->persist($book);
             $em->flush();
+        }
+        else {
+            $errors = $res;
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
@@ -136,43 +104,17 @@ class AppController extends AbstractController
             $errors[] = $translator->trans("book_not_found");
         }
         else {
-            $title = trim($request->get("title"));
-            if (empty($title)) {
-                $title = null;
-            }
-            $subtitle = trim($request->get("subtitle"));
-            if (empty($subtitle)) {
-                $subtitle = null;
-            }
-            $summary = trim($request->get("summary"));
-            if (empty($summary)) {
-                $summary = null;
-            }
-            $publicationYear = $request->get("publicationYear");
-            // Check the value is an integer
-            if (!empty($publicationYear)) {
-                if (preg_match("/^\d+$/", $publicationYear)) {// Check it is an integer
-                    $publicationYear = intval($publicationYear);
-                } else {
-                    $publicationYear = null;
-                }
-            }
-            $genreCode = $request->get("genre");
-            $genre = null;
-            if (!empty($genreCode)) {
-                $genre = $repoGenre->findOneByCode($genreCode);
-            }
 
-            // Create the book
-            if (empty($title)) {
-                $errors[] = $translator->trans("title_field_empty");
-            } else {
-                $book->setTitle($title);
-                $book->setSubtitle($subtitle);
-                $book->setSummary($summary);
-                $book->setPublicationYear($publicationYear);
-                $book->setGenre($genre);
+            $res = $dataUtils->setBookFromRequest($request, $book, $repoGenre);
+
+            if($res instanceof Book) {
+                $book = $res;
                 $em->flush();
+            }
+            else {
+                foreach($res as $error) {
+                    $errors[] = $error;
+                }
             }
         }
 
@@ -228,8 +170,9 @@ class AppController extends AbstractController
     /**
      * @Route("/genres", methods={"GET","HEAD"})
      */
-    public function genres(DataUtils $dataUtils, TranslatorInterface $translator): Response
+    public function genres(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
     {
+        $dataUtils->setBookFromRequest($request);
         $em = $this->getDoctrine()->getManager();
         $repoGenre = $em->getRepository(Genre::class);
 
