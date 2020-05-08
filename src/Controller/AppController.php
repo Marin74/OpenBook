@@ -32,10 +32,13 @@ class AppController extends AbstractController
 
         $books = $repoBook->findBy(array(), array("title" => "ASC"), self::LIMIT, $page);
 
+        //header("Access-Control-Allow-Origin: *");// TODO
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             "books" => $dataUtils->getBooks($books)
         ));
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -49,9 +52,11 @@ class AppController extends AbstractController
         $book = $repoBook->find($request->get("id"));
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             "book" => $dataUtils->getBook($book)
         ));
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -77,14 +82,20 @@ class AppController extends AbstractController
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        $response = null;
         if(count($errors) > 0) {
-            return new JsonResponse(array(
+            $response = new JsonResponse(array(
                 "errors"    => $errors
             ));
         }
-        return new JsonResponse(array(
-            "book" => $dataUtils->getBook($book)
-        ));
+        else {
+            $response = new JsonResponse(array(
+                "book" => $dataUtils->getBook($book)
+            ));
+        }
+
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -120,14 +131,20 @@ class AppController extends AbstractController
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        $response = null;
         if(count($errors) > 0) {
-            return new JsonResponse(array(
+            $response = new JsonResponse(array(
                 "errors"    => $errors
             ));
         }
-        return new JsonResponse(array(
-            "book" => $dataUtils->getBook($book)
-        ));
+        else {
+            $response = new JsonResponse(array(
+                "book" => $dataUtils->getBook($book)
+            ));
+        }
+
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -147,9 +164,11 @@ class AppController extends AbstractController
         $authors = $repoAuthor->findBy(array(), array("name" => "ASC"), self::LIMIT, $page);
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             "authors" => $dataUtils->getAuthors($authors)
         ));
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -163,9 +182,11 @@ class AppController extends AbstractController
         $author = $repoAuthor->find($request->get("id"));
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             "author" => $dataUtils->getAuthor($author)
         ));
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -190,14 +211,20 @@ class AppController extends AbstractController
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        $response = null;
         if(count($errors) > 0) {
-            return new JsonResponse(array(
+            $response = new JsonResponse(array(
                 "errors"    => $errors
             ));
         }
-        return new JsonResponse(array(
-            "author"    => $dataUtils->getAuthor($author)
-        ));
+        else {
+            $response = new JsonResponse(array(
+                "author" => $dataUtils->getAuthor($author)
+            ));
+        }
+
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -232,14 +259,20 @@ class AppController extends AbstractController
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        $response = null;
         if(count($errors) > 0) {
-            return new JsonResponse(array(
+            $response = new JsonResponse(array(
                 "errors"    => $errors
             ));
         }
-        return new JsonResponse(array(
-            "author"    => $dataUtils->getAuthor($author)
-        ));
+        else {
+            $response = new JsonResponse(array(
+                "author" => $dataUtils->getAuthor($author)
+            ));
+        }
+
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 
     /**
@@ -266,8 +299,11 @@ class AppController extends AbstractController
         }
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             "genres"    => $dataUtils->getGenres($genres)
         ));
+
+        $response->headers->set("Access-Control-Allow-Origin", "*");
+        return $response;
     }
 }
