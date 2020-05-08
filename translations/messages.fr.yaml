@@ -1,5 +1,7 @@
 novel: Roman
-title_field_empty: Le champ "titre" est vide.
+title_field_empty: Le champ "title" est vide.
+name_field_empty: Le champ "name" est vide.
+author_not_found: L'auteur est introuvable.
 book_not_found: Le livre est introuvable.
 poetry: Poésie
 short_story: Nouvelle

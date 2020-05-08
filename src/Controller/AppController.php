@@ -57,12 +57,13 @@ class AppController extends AbstractController
     /**
      * @Route("/books/new", methods={"POST"})
      */
-    public function createBook(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
+    public function createBook(Request $request, DataUtils $dataUtils): Response
     {
         $em = $this->getDoctrine()->getManager();
         $repoGenre = $em->getRepository(Genre::class);
 
         $errors = array();
+        $book = null;
 
         $res = $dataUtils->setBookFromRequest($request, new Book(), $repoGenre);
 
@@ -164,6 +165,80 @@ class AppController extends AbstractController
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
         return new JsonResponse(array(
             "author" => $dataUtils->getAuthor($author)
+        ));
+    }
+
+    /**
+     * @Route("/authors/new", methods={"POST"})
+     */
+    public function createAuthor(Request $request, DataUtils $dataUtils): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $errors = array();
+        $author = null;
+
+        $res = $dataUtils->setAuthorFromRequest($request, new Author());
+
+        if($res instanceof Author) {
+            $author = $res;
+            $em->persist($author);
+            $em->flush();
+        }
+        else {
+            $errors = $res;
+        }
+
+        // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        if(count($errors) > 0) {
+            return new JsonResponse(array(
+                "errors"    => $errors
+            ));
+        }
+        return new JsonResponse(array(
+            "author"    => $dataUtils->getAuthor($author)
+        ));
+    }
+
+    /**
+     * @Route("/authors/{id}", methods={"PUT"})
+     */
+    public function updateAuthor(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repoAuthor = $em->getRepository(Author::class);
+
+        $errors = array();
+
+        $id = $request->get("id");
+        $author = $repoAuthor->find($id);
+
+        if(!$author) {
+            $errors[] = $translator->trans("author_not_found");
+        }
+        else {
+
+            $res = $dataUtils->setAuthorFromRequest($request, $author);
+
+            if($res instanceof Author) {
+                $author = $res;
+                $em->flush();
+            }
+            else {
+                foreach($res as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }
+
+        // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
+        if(count($errors) > 0) {
+            return new JsonResponse(array(
+                "errors"    => $errors
+            ));
+        }
+        return new JsonResponse(array(
+            "author"    => $dataUtils->getAuthor($author)
         ));
     }
 

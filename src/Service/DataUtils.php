@@ -151,10 +151,19 @@ class DataUtils {
             $errors[] = $this->translator->trans("title_field_empty");
         } else {
             $book->setTitle($title);
-            $book->setSubtitle($subtitle);
-            $book->setSummary($summary);
-            $book->setPublicationYear($publicationYear);
-            $book->setGenre($genre);
+            if($request->query->has("subtitle")) {
+                $book->setSubtitle($subtitle);
+            }
+            if($request->query->has("summary")) {
+                $book->setSummary($summary);
+            }
+            if($request->query->has("publicationYear")) {
+                $book->setPublicationYear($publicationYear);
+            }
+            if($request->query->has("genre")) {
+                $book->setGenre($genre);
+            }
+            $book->setUpdatedAt(new \DateTime());
         }
 
         if(count($errors) > 0) {
@@ -162,5 +171,49 @@ class DataUtils {
         }
 
         return $book;
+    }
+
+    public function setAuthorFromRequest(Request $request, Author $author) {
+
+        $errors = array();
+
+        $name = trim($request->get("name"));
+        if (empty($name)) {
+            $name = null;
+        }
+        $birthDate = $request->get("birthDate");
+        if(!empty($birthDate)) {
+            $birthDate = \DateTime::createFromFormat("Y-m-d", $birthDate);
+            if(is_bool($birthDate)) {
+                $birthDate = null;
+            }
+        }
+        $deathDate = $request->get("deathDate");
+        if(!empty($deathDate)) {
+            $deathDate = \DateTime::createFromFormat("Y-m-d", $deathDate);
+            if(is_bool($deathDate)) {
+                $deathDate = null;
+            }
+        }
+
+        // Create the author
+        if (empty($name)) {
+            $errors[] = $this->translator->trans("name_field_empty");
+        } else {
+            $author->setName($name);
+            if($request->query->has("birthDate")) {
+                $author->setBirthDate($birthDate);
+            }
+            if($request->query->has("deathDate")) {
+                $author->setDeathDate($deathDate);
+            }
+            $author->setUpdatedAt(new \DateTime());
+        }
+
+        if(count($errors) > 0) {
+            return $errors;
+        }
+
+        return $author;
     }
 }
