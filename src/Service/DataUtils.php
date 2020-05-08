@@ -18,6 +18,7 @@ class DataUtils {
 
     public function getAuthor(Author $author = null) {
 
+        // TODO Get picture
         $data = array();
 
         if($author != null) {
@@ -31,6 +32,10 @@ class DataUtils {
             }
             if ($author->getDeathDate() != null) {
                 $data["deathDate"] = $author->getDeathDate()->format("Y-m-d");
+            }
+            if(!empty($author->getPicture())) {
+                // TODO Get by the standard way the URL
+                $data["picture"] = "https://openbook.s3.fr-par.scw.cloud/author/".$author->getPicture();
             }
         }
 
@@ -54,6 +59,9 @@ class DataUtils {
             if (!empty($book->getSubtitle())) {
                 $data["subtitle"] = $book->getSubtitle();
             }
+            if (!empty($book->getOriginalTitle())) {
+                $data["originalTitle"] = $book->getOriginalTitle();
+            }
             if(count($authorsData) > 0) {
                 $data["authors"] = $authorsData;
             }
@@ -63,10 +71,13 @@ class DataUtils {
             if (!empty($book->getPublicationYear())) {
                 $data["publicationYear"] = $book->getPublicationYear();
             }
-
             $genreData = $this->getGenre($book->getGenre());
             if(!empty($genreData)) {
                 $data["genre"] = $genreData;
+            }
+            if(!empty($book->getPicture())) {
+                // TODO Get by the standard way the URL
+                $data["picture"] = "https://openbook.s3.fr-par.scw.cloud/book/".$book->getPicture();
             }
         }
 
@@ -127,6 +138,10 @@ class DataUtils {
         if (empty($subtitle)) {
             $subtitle = null;
         }
+        $originalTitle = trim($request->get("originalTitle"));
+        if (empty($originalTitle)) {
+            $originalTitle = null;
+        }
         $summary = trim($request->get("summary"));
         if (empty($summary)) {
             $summary = null;
@@ -153,6 +168,9 @@ class DataUtils {
             $book->setTitle($title);
             if($request->query->has("subtitle")) {
                 $book->setSubtitle($subtitle);
+            }
+            if($request->query->has("originalTitle")) {
+                $book->setOriginalTitle($originalTitle);
             }
             if($request->query->has("summary")) {
                 $book->setSummary($summary);
