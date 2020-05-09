@@ -4,6 +4,7 @@ namespace App\Service;
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Genre;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -97,6 +98,16 @@ class DataUtils {
     }
 
     public function getBooks(array $books) {
+        $data = array();
+
+        foreach($books as $book) {
+            $data[] = $this->getBook($book);
+        }
+
+        return $data;
+    }
+
+    public function getBooksFromCollection(Collection $books) {
         $data = array();
 
         foreach($books as $book) {

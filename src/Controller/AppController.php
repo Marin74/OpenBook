@@ -182,9 +182,13 @@ class AppController extends AbstractController
         $author = $repoAuthor->find($request->get("id"));
 
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
-        $response = new JsonResponse(array(
-            "author" => $dataUtils->getAuthor($author)
-        ));
+        $dataResponse = array(
+            "author" => $dataUtils->getAuthor($author),
+        );
+        if(count($author->getBooks()) > 0) {
+            $dataResponse["books"] = $dataUtils->getBooksFromCollection($author->getBooks());
+        }
+        $response = new JsonResponse($dataResponse);
         $response->headers->set("Access-Control-Allow-Origin", "*");
         return $response;
     }
