@@ -185,7 +185,7 @@ class AppController extends AbstractController
         $dataResponse = array(
             "author" => $dataUtils->getAuthor($author),
         );
-        if(count($author->getBooks()) > 0) {
+        if($author != null && count($author->getBooks()) > 0) {
             $dataResponse["books"] = $dataUtils->getBooksFromCollection($author->getBooks());
         }
         $response = new JsonResponse($dataResponse);
@@ -282,7 +282,7 @@ class AppController extends AbstractController
     /**
      * @Route("/genres", methods={"GET","HEAD"})
      */
-    public function genres(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
+    public function genres(DataUtils $dataUtils, TranslatorInterface $translator): Response
     {
         $em = $this->getDoctrine()->getManager();
         $repoGenre = $em->getRepository(Genre::class);
