@@ -194,7 +194,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/authors/new", methods={"POST"})
+     * @Route("/authors/new", methods={"POST","HEAD"})
      */
     public function createAuthor(Request $request, DataUtils $dataUtils): Response
     {
