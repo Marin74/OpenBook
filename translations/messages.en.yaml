@@ -1,8 +1,38 @@
-novel: Novel
+# Errors
 title_field_empty: The "title" field is empty.
 name_field_empty: The "name" field is empty.
 author_not_found: The author is not found.
 book_not_found: The book is not found.
+
+# Genres
+novel: Novel
 poetry: Poetry
 short_story: Short story
-drama: Drama
+essay: Essay
+theater: Theater
+interview: Interviex
+architecture: Architecture
+art_of_living: Art of living
+cinema_television: Cinéma & television
+culture_society: Culture & society
+dance: Dance
+fantastic: Fantastic
+history: History
+comedy: Comedy
+video_game: Video game
+children: Children
+music: Music
+painting_sculpture: Painting & sculpture
+philosophy: Philosophy
+photography: Photography
+detective: Detective
+politics_economy: Politics & economy
+romance: Romance
+science_fiction: Science-fiction
+sciences: Sciences
+travel: Travel
+articles_chronicles: Articles & chronicle
+autobiographies_memoirs: Autobiographies & memoirs
+dictionary: Dictionary
+tale: Tale
+cooking: Cooking

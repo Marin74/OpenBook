@@ -1,8 +1,38 @@
-novel: Roman
+# Errors
 title_field_empty: Le champ "title" est vide.
 name_field_empty: Le champ "name" est vide.
 author_not_found: L'auteur est introuvable.
 book_not_found: Le livre est introuvable.
+
+# Genres
+novel: Roman
 poetry: Poésie
 short_story: Nouvelle
-drama: Drame
+essay: Essai
+theater: Théâtre
+interview: Entretien
+architecture: Architecture
+art_of_living: Art de vivre
+cinema_television: Cinéma & télévision
+culture_society: Culture & société
+dance: Danse
+fantastic: Fantastique
+history: Histoire
+comedy: Humour
+video_game: Jeu vidéo
+children: Jeunesse
+music: Musique
+painting_sculpture: Peinture & sculpture
+philosophy: Philosophie
+photography: Photographie
+detective: Policier
+politics_economy: Politique & économie
+romance: Romance
+science_fiction: Science-fiction
+sciences: Sciences
+travel: Voyage
+articles_chronicles: Articles & chroniques
+autobiographies_memoirs: Autobiographies & mémoires
+dictionary: Dictionnaire
+tale: Conte
+cooking: Cuisine
