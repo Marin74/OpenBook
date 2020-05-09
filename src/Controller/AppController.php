@@ -284,7 +284,6 @@ class AppController extends AbstractController
      */
     public function genres(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
     {
-        $dataUtils->setBookFromRequest($request);
         $em = $this->getDoctrine()->getManager();
         $repoGenre = $em->getRepository(Genre::class);
 
