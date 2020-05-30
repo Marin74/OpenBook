@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AuthorRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,8 +59,8 @@ class Author
     public function __construct()
     {
         $this->books = new ArrayCollection();
-        $this->setCreatedAt(new \DateTime());
-        $this->setUpdatedAt(new \DateTime());
+        $this->setCreatedAt(new DateTime());
+        $this->setUpdatedAt(new DateTime());
     }
 
     public function getId(): ?int
@@ -78,24 +80,24 @@ class Author
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): ?DateTimeInterface
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birthDate): self
+    public function setBirthDate(?DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 
         return $this;
     }
 
-    public function getDeathDate(): ?\DateTimeInterface
+    public function getDeathDate(): ?DateTimeInterface
     {
         return $this->deathDate;
     }
 
-    public function setDeathDate(?\DateTimeInterface $deathDate): self
+    public function setDeathDate(?DateTimeInterface $deathDate): self
     {
         $this->deathDate = $deathDate;
 
@@ -114,12 +116,12 @@ class Author
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -154,12 +156,12 @@ class Author
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
