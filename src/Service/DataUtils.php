@@ -19,7 +19,6 @@ class DataUtils {
 
     public function getAuthor(Author $author = null) {
 
-        // TODO Get picture
         $data = array();
 
         if($author != null) {

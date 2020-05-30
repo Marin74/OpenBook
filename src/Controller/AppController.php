@@ -32,7 +32,6 @@ class AppController extends AbstractController
 
         $books = $repoBook->findBy(array(), array("title" => "ASC"), self::LIMIT, $page);
 
-        //header("Access-Control-Allow-Origin: *");// TODO
         // https://symfony.com/doc/current/components/http_foundation.html#creating-a-json-response
         $response = new JsonResponse(array(
             "books" => $dataUtils->getBooks($books)
