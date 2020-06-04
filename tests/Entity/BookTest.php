@@ -14,6 +14,6 @@ class BookTest extends TestCase
         $book = new Book();
         $book->setTitle("La fortune des Rougon");
 
-        $this->assertSame("La fortune des Rougon", $book->getTitle());
+        $this->assertEquals("La fortune des Rougon", $book->getTitle());
     }
 }
