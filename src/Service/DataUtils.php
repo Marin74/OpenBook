@@ -1,5 +1,5 @@
 <?php
-namespace App\Util;
+namespace App\Service;
 
 use App\Entity\Author;
 use App\Entity\Book;

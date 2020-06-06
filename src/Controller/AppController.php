@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Genre;
-use App\Util\DataUtils;
+use App\Service\DataUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +21,7 @@ class AppController extends AbstractController
     */
     public function books(Request $request, DataUtils $dataUtils): Response
     {
+        //dump("test");
         $em = $this->getDoctrine()->getManager();
         $repoBook = $em->getRepository(Book::class);
 
