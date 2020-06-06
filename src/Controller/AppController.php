@@ -41,7 +41,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/books/{id}", methods={"GET","HEAD"})
+     * @Route("/books/{id<\d+>}", methods={"GET","HEAD"})
      */
     public function book(Request $request, DataUtils $dataUtils): Response
     {
@@ -98,7 +98,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/books/{id}", methods={"PUT"})
+     * @Route("/books/{id<\d+>}", methods={"PUT"})
      */
     public function updateBook(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
     {
@@ -171,7 +171,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/authors/{id}", methods={"GET","HEAD"})
+     * @Route("/authors/{id<\d+>}", methods={"GET","HEAD"})
      */
     public function author(Request $request, DataUtils $dataUtils): Response
     {
@@ -231,7 +231,7 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/authors/{id}", methods={"PUT"})
+     * @Route("/authors/{id<\d+>}", methods={"PUT"})
      */
     public function updateAuthor(Request $request, DataUtils $dataUtils, TranslatorInterface $translator): Response
     {
